@@ -1,9 +1,9 @@
-package data.model
+package data.model.pokemon.network
 
 import kotlinx.serialization.Serializable
 
 @Serializable
-data class PokemonInfoUrl(
+data class PokemonDto(
     val name: String,
-    val url: String
+    val order: Int,
 )
