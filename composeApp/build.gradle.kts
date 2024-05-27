@@ -4,6 +4,7 @@ plugins {
     alias(libs.plugins.kotlinMultiplatform)
     alias(libs.plugins.androidApplication)
     alias(libs.plugins.jetbrainsCompose)
+    kotlin("plugin.serialization") version "1.9.10"
 }
 
 kotlin {
@@ -46,6 +47,8 @@ kotlin {
             implementation(compose.components.uiToolingPreview)
 
             implementation(libs.ktor.client.core)
+            implementation(libs.ktor.serialization.kotlinx.json)
+            implementation(libs.ktor.client.content.negotiation)
 
             implementation(libs.kotlinx.coroutines.core)
 
