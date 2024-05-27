@@ -12,6 +12,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
@@ -29,13 +30,12 @@ import org.koin.compose.currentKoinScope
 @Composable
 @Preview
 fun App() {
-    val pokemonService = PokemonService()
     MaterialTheme {
         KoinContext {
             val navController = rememberNavController()
             NavHost(navController, startDestination = "home") {
                 composable("home") {
-                    HomeScreen(pokemonService)
+                    HomeScreen(navController)
                 }
             }
         }
@@ -44,11 +44,12 @@ fun App() {
 
 @Composable
 private fun HomeScreen(
-    pokemonService: PokemonService,
+    navController: NavHostController,
+    viewModel:MainViewModel = koinViewModel<MainViewModel>()
 ) {
     var pokemonList by remember { mutableStateOf<List<PokemonInfoUrl>>(emptyList()) }
     LaunchedEffect(Unit) {
-        val pokemonListDto = pokemonService.getPokemonList()
+        val pokemonListDto = viewModel.getPokemonList()
         pokemonList = pokemonListDto.results
     }
 
@@ -61,7 +62,7 @@ private fun HomeScreen(
             items(pokemonList) { pokemon ->
                 PokemonListItem(
                     callPokemonInfo = {
-                        pokemonService.getPokemonFromUrl(pokemon.url)
+                        viewModel.getPokemonFromUrl(pokemon.url)
                     }
                 )
             }
