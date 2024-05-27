@@ -15,6 +15,7 @@ import coil3.compose.AsyncImage
 import coil3.compose.LocalPlatformContext
 import coil3.request.ImageRequest
 import coil3.request.crossfade
+import data.network.PokemonService
 import org.jetbrains.compose.resources.ExperimentalResourceApi
 import org.jetbrains.compose.resources.painterResource
 import org.jetbrains.compose.ui.tooling.preview.Preview
@@ -22,15 +23,16 @@ import org.jetbrains.compose.ui.tooling.preview.Preview
 import kotlinproject.composeapp.generated.resources.Res
 import kotlinproject.composeapp.generated.resources.compose_multiplatform
 
-@OptIn(ExperimentalResourceApi::class)
 @Composable
 @Preview
 fun App() {
+    val pokemonService = PokemonService()
     MaterialTheme {
         var showContent by remember { mutableStateOf(false) }
         var showText by remember { mutableStateOf<String>("") }
         LaunchedEffect(Unit){
             showText = Greeting().greeting()
+            pokemonService.getPokemonList()
         }
 
         Column(Modifier.fillMaxWidth(), horizontalAlignment = Alignment.CenterHorizontally) {
