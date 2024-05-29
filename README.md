@@ -1,6 +1,7 @@
 ## Kotlin Multiplaform - Pokemon App
 
 Di - Koin
+
 Network - Ktor
 
 |iOS|Android|
